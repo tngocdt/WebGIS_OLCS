@@ -21,7 +21,8 @@
     <script src="/js/googleCharts/loader.js"></script>
     <script src="/js/googleCharts/jsapi.js"></script>
 
-    <!-- "geotiff": "/node_modules/geotiff/dist-module/geotiff.js", -->
+    <script type="text/javascript" src="/node_modules/cesium/Build/Cesium/Cesium.js"></script>
+    <link rel="stylesheet" href="/node_modules/cesium/Build/Cesium/Widgets/widgets.css">
 
     <script type="importmap">        
         {
@@ -38,9 +39,9 @@
                 "color-parse": "/node_modules/color-parse/index.js",
                 "color-name": "/node_modules/color-name/index.js",
 
-                "geotiff": "/node_modules/geotiff/dist-module/geotiff.js",
+                "geotiff_v02": "/node_modules/geotiff/dist-module/geotiff_v02.js",
 
-                "@petamoriken/float16": "/node_modules/@petamoriken/float16/browser/float16.js",
+                "@petamoriken/float16": "/node_modules/@petamoriken/float16/browser/float16.mjs",
 
                 "xml-utils/": "/node_modules/xml-utils/",
 
@@ -50,25 +51,7 @@
             }
         }
     </script>
-
-    <!-- <script type="module" src="/js/ol/dist/ol.js"></script> -->
-    <script type="module">
-        // https://stackoverflow.com/questions/69888029/how-to-call-a-function-declared-in-a-javascript-module-type-module-from-an-htm
-        import { FindLocation } from "./js/olmain.js";
-
-        window.FindLocation = FindLocation;        
-    </script>
-     <!-- <script type="text/javascript" src="/js/ol/dist/ol.js"></script> -->
-    <!-- <script type="text/javascript" src="/js/olmain.js"></script> -->
-
-    <!-- <script type="module" src="/js/olcs/lib/olcs.js"></script> -->
-    <!-- <script src="https://cesium.com/downloads/cesiumjs/releases/1.113/Build/Cesium/Cesium.js"></script> -->
-    <script src="/node_modules/cesium/Build/Cesium/Cesium.js"></script>
-    <!-- <script type="text/javascript" src="/node_modules/ol/dist/ol.js"></script> -->
-    <!-- <script type="text/javascript" src="/node_modules/olcs/lib/olcs.js"></script> -->
     
-    <script type="text/javascript" src="/js/olsearch.js"></script>
-
     <script type="text/javascript">        
         
         $(document).ready(function () {
@@ -177,7 +160,7 @@
             background-color: #111;
             color: white;
             padding: 5px;
-            position:absolute; 
+            /* position:absolute; */
             bottom:0px; 
             height:30px; 
             left:0px; 
@@ -762,8 +745,20 @@
 
                         </div>
                     </div>
-                    <div id='idMap' class="map" style="height: 500px; width: 100%;"></div>
 
+                    <br>
+                    <label style="background-color:orange;font-weight:bold;padding:3px 0;;width:100%">LONGITUDE Reducing >> Move Right - / - LATITUDE Reducing >> Move Up</label>
+                    <div id="idCesiumContainer" style="height: 590px; width: 100%; position:relative;"></div>
+                    <br>
+                    <div id='id2DMap' class="map" style="height: 500px; width: 100%;"></div>
+                    
+                    <br>
+                    <div id='id3DMap' class="map" style="height: 500px; width: 100%; position:relative;"></div>
+
+                    <br>
+                    <input id="idCesiumEnable" type="button" value="Enable/Disable 3D Cesium" />
+                    
+                    <br>
                     <!-- Show Legend On The Map -->
                     <div id="idLegend" style="display: flex; text-align: center; vertical-align: middle;">
                         <img src="http://localhost:9999/geoserver/WebGISDBdev/wms?service=WMS&version=1.1.0&request=GetLegendGraphic&width=20&height=20&LAYER=WebGISDBdev:house&bbox=-124.73,24.956,-66.96,49.37&srcwidth=768&srcheight=330&srs=EPSG:4326&format=image/png&legend_options=forceLabels:on;countMatched:true;fontAntiAliasing:true;layout:vertical"/>
@@ -773,6 +768,8 @@
                         <img src="http://localhost:9999/geoserver/WebGISDBdev/wms?service=WMS&version=1.1.0&request=GetLegendGraphic&width=20&height=20&LAYER=WebGISDBdev:tree_vn2000&bbox=-124.73,24.956,-66.96,49.37&srcwidth=768&srcheight=330&srs=EPSG:4326&format=image/png&legend_options=forceLabels:on;countMatched:true;fontAntiAliasing:true"/>
                         <!-- <img src="http://localhost:9999/geoserver/WebGISDBdev/wms?service=WMS&version=1.1.0&request=GetLegendGraphic&width=20&height=20&LAYER=WebGISDBdev:WebGISDBdev_LayerGroup&bbox=-124.73,24.956,-66.96,49.37&srcwidth=768&srcheight=330&srs=EPSG:4326&format=image/png&legend_options=forceLabels:on;countMatched:true;fontAntiAliasing:true;layout:vertical"/> -->
                     </div>
+                    
+                    <br>
                     <div id="idInfor">
                         <!-- <iframe width="560" height="315"  src="https://www.youtube.com/watch?v=h1d_ArQSCW0" frameborder="0" allowfullscreen></iframe> -->
                     </div>
@@ -782,6 +779,20 @@
                          
                         <div id="idPopupContent"></div>
                     </div>
+                    
+                    <!-- <div id="id3DMap" style="width:600px;height:400px;float:left;position:relative;"></div> -->
+                    <script src="/js/inject_ol_cesium.js"></script>
+                    <script type="module">
+                        // https://stackoverflow.com/questions/69888029/how-to-call-a-function-declared-in-a-javascript-module-type-module-from-an-htm
+                        import { FindLocation } from "/js/olmain.js";
+                
+                        window.FindLocation = FindLocation;        
+                    </script>
+                    
+                    <script type="text/javascript" src="/js/olsearch.js"></script>
+
+                    <!-- <script src="/js/ol3cesium.js"></script> -->
+                    
             </div>
             <!-- *************************************************************************************** -->
         </div>
